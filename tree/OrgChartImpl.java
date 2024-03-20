@@ -8,7 +8,7 @@ public class OrgChartImpl implements OrgChart{
 
 	//Employee is your generic 'E'..
 	private List<GenericTreeNode<Employee>> nodes = new ArrayList<>();
-
+	
 	@Override
 	public void addRoot(Employee e) {
 		// TODO Auto-generated method stub

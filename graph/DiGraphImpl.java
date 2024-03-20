@@ -10,8 +10,8 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean addNode(GraphNode node) {
-		// TODO Auto-generated method stub
-		return null;
+		nodeList.add(node);
+		return true;
 	}
 
 	@Override
@@ -22,14 +22,13 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean setNodeValue(GraphNode node, String newNodeValue) {
-		// TODO Auto-generated method stub
-		return null;
+			node.setValue(newNodeValue);
+			return true;
 	}
 
 	@Override
 	public String getNodeValue(GraphNode node) {
-		// TODO Auto-generated method stub
-		return null;
+		return node.getValue();
 	}
 
 	@Override
@@ -82,8 +81,7 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public List<GraphNode> getNodes() {
-		// TODO Auto-generated method stub
-		return null;
+		return nodeList;
 	}
 
 	@Override

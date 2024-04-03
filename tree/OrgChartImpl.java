@@ -2,7 +2,6 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
-
  
 public class OrgChartImpl implements OrgChart{
 
@@ -11,7 +10,8 @@ public class OrgChartImpl implements OrgChart{
 	
 	@Override
 	public void addRoot(Employee e) {
-		// TODO Auto-generated method stub
+		GenericTreeNode<Employee> rootEmployee = new GenericTreeNode<Employee>(e);
+		nodes.add(rootEmployee);
 		
 	}
 
@@ -23,7 +23,17 @@ public class OrgChartImpl implements OrgChart{
 
 	@Override
 	public void addDirectReport(Employee manager, Employee newPerson) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < nodes.size(); i++) {
+			GenericTreeNode<Employee> currentEmployee = nodes.get(i);
+			if (currentEmployee.data.equals(manager)) {
+				GenericTreeNode<Employee> newE = new GenericTreeNode<Employee>(newPerson);
+				
+				currentEmployee.addChild(newE);
+				
+				nodes.add(newE);
+				break;
+			}
+		}
 		
 	}
 

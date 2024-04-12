@@ -16,8 +16,13 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean removeNode(GraphNode node) {
-		// TODO Auto-generated method stub
-		return null;
+		if (nodeList.contains(node)) {
+			nodeList.remove(node);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -33,14 +38,12 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean addEdge(GraphNode fromNode, GraphNode toNode, Integer weight) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.addNeighbor(toNode, weight);
 	}
 
 	@Override
 	public Boolean removeEdge(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.removeNeighbor(toNode);
 	}
 
 	@Override
@@ -51,20 +54,21 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Integer getEdgeValue(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.getDistanceToNeighbor(toNode);
 	}
 
 	@Override
 	public List<GraphNode> getAdjacentNodes(GraphNode node) {
-		// TODO Auto-generated method stub
-		return null;
+		return node.getNeighbors();
 	}
 
 	@Override
 	public Boolean nodesAreAdjacent(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		if (fromNode.getNeighbors().contains(toNode) && toNode.getNeighbors().contains(fromNode)) {
+			return true;
+		}
+		return false;
+		
 	}
 
 	@Override
@@ -86,7 +90,12 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public GraphNode getNode(String nodeValue) {
-		// TODO Auto-generated method stub
+		for (GraphNode e : nodeList) {
+			if (e.getValue().equals(nodeValue)) {
+				return e;
+			}
+		}
+		System.out.println("Node with nodeValue does not exist");
 		return null;
 	}
 

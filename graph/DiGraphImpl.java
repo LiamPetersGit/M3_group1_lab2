@@ -13,9 +13,6 @@ import java.util.Set;
 public class DiGraphImpl implements DiGraph{
 
 	private List<GraphNode> nodeList = new ArrayList<>();
-	
-	private Set<GraphNode> visited = new HashSet<>();
-	private Set<GraphNode> isBeingVisited = new HashSet<>();
 
 	@Override
 	public Boolean addNode(GraphNode node) {

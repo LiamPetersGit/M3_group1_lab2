@@ -56,5 +56,8 @@ public class GraphNode {
 		paths.put(neighbor, weight);
 		return true;
 	}
+	public HashMap<GraphNode, Integer> getPaths() {
+		return paths;
+	}
 	
 }

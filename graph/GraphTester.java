@@ -1,7 +1,5 @@
 package graph;
 
- 
-
 public class GraphTester {
 
 	private static DiGraph graph;
@@ -80,7 +78,7 @@ public class GraphTester {
 
 	private static void TESTshortestPath(String nodeFrom, String nodeTo) {
 
-		System.out.println("The graph has a shortest path of " + graph.shortestPath(new GraphNode(nodeFrom), new GraphNode(nodeTo)));
+		System.out.println("The graph from " + nodeFrom + " to " + nodeTo + " has a shortest path of " + graph.shortestPath(new GraphNode(nodeFrom), new GraphNode(nodeTo)));
 		
 		
 	}
@@ -113,22 +111,18 @@ public class GraphTester {
 
 	public static void TESTdescribeGraph() {
 
-		for(GraphNode thisNode : graph.getNodes()) {
-			System.out.println("Node [" + thisNode.getValue() + "] ");
-			
-				if(thisNode.getNeighbors().isEmpty()) {
-					System.out.println("has no outgoing connections");
-					
-				}else {
-					System.out.println();
-					for (GraphNode neighbor : thisNode.getNeighbors()) {
-						System.out.println("is connected to");
-					}
-	
+		for (GraphNode thisNode : graph.getNodes()) {
+			System.out.print("Node [" + thisNode.getValue() + "] ");
+			if (thisNode.getNeighbors().isEmpty()) {
+				System.out.print("has no outgoing connections");
+			}
+			else {
+				System.out.print("is connected to ");
+				for (GraphNode neighbor : thisNode.getNeighbors()) {
+					System.out.print("[" + neighbor.getValue() + "] by " + thisNode.getDistanceToNeighbor(neighbor).toString() + " ");
 				}
-				
-				System.out.println();
-				
+			}
+			System.out.println();
 		}
 		
 	}

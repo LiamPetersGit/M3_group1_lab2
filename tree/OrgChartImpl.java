@@ -42,38 +42,38 @@ public class OrgChartImpl implements OrgChart{
 	public void removeEmployee(Employee firedPerson) {
 		// TODO Auto-generated method stub
 		
-		GenericTreeNode<Employee> parent = null;
-		GenericTreeNode<Employee> toRemove = null;
-	
-		// Find the node to remove and its parent
-		for (GenericTreeNode<Employee> node : nodes) {
-			if (node.data.equals(firedPerson)) {
-				toRemove = node; // Handling if node has no parent
-				break;
-			}
-			for (GenericTreeNode<Employee> child : node.children) {
-				if (child.data.equals(firedPerson)) {
-					parent = node;
-					toRemove = child;
-					break;
-				}
-			}
-			if (toRemove != null) break;
-		}
-	
-		if (toRemove != null) {
-			if (parent != null) {
-				int removeIndex = parent.children.indexOf(toRemove);
-				parent.children.remove(toRemove);
-				// Adjusting the reinsertion index to maintain the correct order for both traversals
-				int reinsertIndex = Math.max(0, removeIndex);
-				for (GenericTreeNode<Employee> child : toRemove.children) {
-					parent.children.add(reinsertIndex, child);
-					reinsertIndex++;
-				}
-			}
-			nodes.remove(toRemove);
-		}
+	GenericTreeNode<Employee> parent = null;
+    GenericTreeNode<Employee> toRemove = null;
+
+    
+    for (GenericTreeNode<Employee> node : nodes) {
+        if (node.data.equals(firedPerson)) {
+            toRemove = node; 
+            break;
+        }
+        for (GenericTreeNode<Employee> child : node.children) {
+            if (child.data.equals(firedPerson)) {
+                parent = node;
+                toRemove = child;
+                break;
+            }
+        }
+        if (toRemove != null) break;
+    }
+
+    if (toRemove != null) {
+        if (parent != null) {
+            int removeIndex = parent.children.indexOf(toRemove);
+            parent.children.remove(toRemove);
+            
+            int reinsertIndex = Math.max(0, removeIndex);
+            for (GenericTreeNode<Employee> child : toRemove.children) {
+                parent.children.add(reinsertIndex, child);
+                reinsertIndex++;
+            }
+        }
+        nodes.remove(toRemove);
+    }
 	}
 
 	@Override

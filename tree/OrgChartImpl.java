@@ -2,6 +2,8 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
  
 public class OrgChartImpl implements OrgChart{
 
@@ -18,20 +20,19 @@ public class OrgChartImpl implements OrgChart{
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
+
+		nodes.clear();
 		
 	}
 
 	@Override
 	public void addDirectReport(Employee manager, Employee newPerson) {
-		for (int i = 0; i < nodes.size(); i++) {
-			GenericTreeNode<Employee> currentEmployee = nodes.get(i);
-			if (currentEmployee.data.equals(manager)) {
-				GenericTreeNode<Employee> newE = new GenericTreeNode<Employee>(newPerson);
-				
-				currentEmployee.addChild(newE);
-				
-				nodes.add(newE);
-				break;
+		for (GenericTreeNode<Employee> node : nodes) {
+			if (node.data.equals(manager)) {
+				GenericTreeNode<Employee> newEmployeeNode = new GenericTreeNode<>(newPerson);
+				node.addChild(newEmployeeNode);
+				nodes.add(newEmployeeNode);
+				return;
 			}
 		}
 		
@@ -41,18 +42,70 @@ public class OrgChartImpl implements OrgChart{
 	public void removeEmployee(Employee firedPerson) {
 		// TODO Auto-generated method stub
 		
+		GenericTreeNode<Employee> parent = null;
+		GenericTreeNode<Employee> toRemove = null;
+	
+		// Find the node to remove and its parent
+		for (GenericTreeNode<Employee> node : nodes) {
+			if (node.data.equals(firedPerson)) {
+				toRemove = node; // Handling if node has no parent
+				break;
+			}
+			for (GenericTreeNode<Employee> child : node.children) {
+				if (child.data.equals(firedPerson)) {
+					parent = node;
+					toRemove = child;
+					break;
+				}
+			}
+			if (toRemove != null) break;
+		}
+	
+		if (toRemove != null) {
+			if (parent != null) {
+				int removeIndex = parent.children.indexOf(toRemove);
+				parent.children.remove(toRemove);
+				// Adjusting the reinsertion index to maintain the correct order for both traversals
+				int reinsertIndex = Math.max(0, removeIndex);
+				for (GenericTreeNode<Employee> child : toRemove.children) {
+					parent.children.add(reinsertIndex, child);
+					reinsertIndex++;
+				}
+			}
+			nodes.remove(toRemove);
+		}
 	}
 
 	@Override
 	public void showOrgChartDepthFirst() {
-		// TODO Auto-generated method stub
-		
+		if (!nodes.isEmpty()) {
+			showOrgChartDepthFirst(nodes.get(0), "");  
+		}
+	}
+	
+	private void showOrgChartDepthFirst(GenericTreeNode<Employee> node, String indent) {
+		if (node == null) return;
+		System.out.println(indent + node.data);
+		for (GenericTreeNode<Employee> child : node.children) {
+			showOrgChartDepthFirst(child, indent + "  ");
+		}
 	}
 
 	@Override
 	public void showOrgChartBreadthFirst() {
 		// TODO Auto-generated method stub
 		
+		if (nodes.isEmpty()) return;
+    
+		Queue<GenericTreeNode<Employee>> queue = new LinkedList<>();
+		queue.add(nodes.get(0));  
+		
+		while (!queue.isEmpty()) {
+			GenericTreeNode<Employee> current = queue.poll();
+			System.out.println(current.data);
+			queue.addAll(current.children);
+		}
+
 	}
 	
 	
